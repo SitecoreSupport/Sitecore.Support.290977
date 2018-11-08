@@ -21,7 +21,10 @@ namespace Sitecore.Support.ContentSearch.ComputedFields
 
       if (item.Paths.IsMediaItem)
       {
-        return MediaManager.GetMediaUrl(item);
+        using (new SiteContextSwitcher(siteContext))
+        {
+          return MediaManager.GetMediaUrl(item);
+        }
       }
 
       UrlOptions urlOptions = LinkManager.GetDefaultUrlOptions();
