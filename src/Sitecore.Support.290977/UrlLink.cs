@@ -17,13 +17,15 @@ namespace Sitecore.Support.ContentSearch.ComputedFields
         return null;
       }
 
+      var siteContext = SiteContextFactory.GetSiteContext("website");
+
       if (item.Paths.IsMediaItem)
       {
         return MediaManager.GetMediaUrl(item);
       }
 
       UrlOptions urlOptions = LinkManager.GetDefaultUrlOptions();
-      urlOptions.Site = SiteContextFactory.GetSiteContext("website");
+      urlOptions.Site = siteContext;
       return LinkManager.GetItemUrl(item, urlOptions);
     }
   }
