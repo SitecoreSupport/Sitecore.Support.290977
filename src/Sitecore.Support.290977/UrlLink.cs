@@ -17,7 +17,7 @@ namespace Sitecore.Support.ContentSearch.ComputedFields
         return null;
       }
 
-      var siteContext = SiteContextFactory.GetSiteContext("website");
+      var siteContext = GetSite();
 
       return item.Paths.IsMediaItem ?
         BuildMediaItemLink(item, siteContext) :
@@ -44,6 +44,11 @@ namespace Sitecore.Support.ContentSearch.ComputedFields
       {
         return MediaManager.GetMediaUrl(item, options);
       }
+    }
+
+    protected virtual SiteContext GetSite()
+    {
+      return SiteContextFactory.GetSiteContext("website");
     }
   }
 }
