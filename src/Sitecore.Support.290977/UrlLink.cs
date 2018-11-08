@@ -19,17 +19,26 @@ namespace Sitecore.Support.ContentSearch.ComputedFields
 
       var siteContext = SiteContextFactory.GetSiteContext("website");
 
-      if (item.Paths.IsMediaItem)
-      {
-        using (new SiteContextSwitcher(siteContext))
-        {
-          return MediaManager.GetMediaUrl(item);
-        }
-      }
+      return item.Paths.IsMediaItem ?
+        BuildMediaItemLink(item, siteContext) :
+        BuildContentItemLink(item, siteContext);
+    }
 
+    protected virtual string BuildContentItemLink(Item item, SiteContext siteContext)
+    {
       UrlOptions urlOptions = LinkManager.GetDefaultUrlOptions();
+
       urlOptions.Site = siteContext;
+
       return LinkManager.GetItemUrl(item, urlOptions);
+    }
+
+    protected virtual string BuildMediaItemLink(Item item, SiteContext siteContext)
+    {
+      using (new SiteContextSwitcher(siteContext))
+      {
+        return MediaManager.GetMediaUrl(item);
+      }
     }
   }
 }
