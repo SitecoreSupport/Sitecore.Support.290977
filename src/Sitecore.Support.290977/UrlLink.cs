@@ -29,15 +29,20 @@ namespace Sitecore.Support.ContentSearch.ComputedFields
       UrlOptions urlOptions = LinkManager.GetDefaultUrlOptions();
 
       urlOptions.Site = siteContext;
+      urlOptions.Language = item.Language;
 
       return LinkManager.GetItemUrl(item, urlOptions);
     }
 
     protected virtual string BuildMediaItemLink(Item item, SiteContext siteContext)
     {
+      var options = MediaUrlOptions.Empty;
+
+      options.Language = item.Language;
+
       using (new SiteContextSwitcher(siteContext))
       {
-        return MediaManager.GetMediaUrl(item);
+        return MediaManager.GetMediaUrl(item, options);
       }
     }
   }
